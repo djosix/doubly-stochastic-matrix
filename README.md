@@ -20,6 +20,27 @@ def random_doubly_stochastic_matrix(n, k=1):
     return M / W.sum()
 ```
 
+When `n` is small enough, we sum up all the possible permutation matrices:
+
+```python
+import math
+import itertools
+import numpy as np
+
+def random_doubly_stochastic_matrix(n):
+    assert n <= 5, 'it runs forever if n is too large'
+
+    weights = np.random.random(math.factorial(n))
+    weights = weights / weights.sum()
+    
+    matrix = np.zeros([n, n])
+    perms = itertools.permutations(range(n))
+    
+    for idxs, weight in zip(perms, weights):
+        matrix[range(n), idxs] += weight
+
+    return matrix
+```
 
 ### Algorithm 2
 
